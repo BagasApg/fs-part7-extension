@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+import anecdoteService from '../services/anecdotes'
 
 export const useField = (type) => {
   const [value, setValue] = useState('')
@@ -21,5 +23,22 @@ export const useField = (type) => {
   return {
     attrs,
     reset
+  }
+}
+
+export const useAnecdotes = () => {
+
+  const [anecdotes, setAnecdotes] = useState([])
+
+  useEffect(() => {
+    anecdoteService.getAll().then(data => setAnecdotes(data))
+  }, [])
+
+  const addAnecdote = (anecdote) => {
+    setAnecdotes(anecdotes.concat({ ...anecdote, id: Math.round(Math.random() * 10000) }))
+  }
+
+  return {
+    anecdotes, addAnecdote
   }
 }
