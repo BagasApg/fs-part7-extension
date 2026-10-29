@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router"
 import { useAnecdotes, useField } from "../hooks"
 
-import anecdoteService from "../services/anecdotes"
 
 const CreateNew = () => {
 
@@ -22,12 +21,7 @@ const CreateNew = () => {
       votes: 0
     }
 
-    console.log(newAnecdote)
-
-
-    const addedAnecdote = await anecdoteService.createNew(newAnecdote)
-
-    addAnecdote(addedAnecdote)
+    addAnecdote(newAnecdote)
 
     navigate("/")
   }
