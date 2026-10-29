@@ -35,10 +35,16 @@ export const useAnecdotes = () => {
   }, [])
 
   const addAnecdote = (anecdote) => {
-    setAnecdotes(anecdotes.concat({ ...anecdote, id: Math.round(Math.random() * 10000) }))
+    console.log(anecdote)
+    setAnecdotes(anecdotes.concat(anecdote))
+  }
+
+  const deleteAnecdote = (id) => {
+    anecdoteService.remove(id)
+    setAnecdotes(anecdotes.filter(anecdote => anecdote.id != id))
   }
 
   return {
-    anecdotes, addAnecdote
+    anecdotes, addAnecdote, deleteAnecdote
   }
 }

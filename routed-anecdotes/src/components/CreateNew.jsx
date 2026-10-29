@@ -1,20 +1,34 @@
 import { useNavigate } from "react-router"
-import { useField } from "../hooks"
+import { useAnecdotes, useField } from "../hooks"
 
-const CreateNew = ({ addAnecdote }) => {
+import anecdoteService from "../services/anecdotes"
+
+const CreateNew = () => {
+
+  const { addAnecdote } = useAnecdotes()
+
   const content = useField('text')
   const author = useField('text')
   const info = useField('text')
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    addAnecdote({
-      content: content.value,
-      author: author.value,
-      info: info.value,
+
+    const newAnecdote = {
+      content: content.attrs.value,
+      author: author.attrs.value,
+      info: info.attrs.value,
       votes: 0
-    })
+    }
+
+    console.log(newAnecdote)
+
+
+    const addedAnecdote = await anecdoteService.createNew(newAnecdote)
+
+    addAnecdote(addedAnecdote)
+
     navigate("/")
   }
 
@@ -26,6 +40,7 @@ const CreateNew = ({ addAnecdote }) => {
     info.reset()
 
   }
+  console.log(content.attrs)
 
   return (
     <div>
@@ -53,7 +68,7 @@ const CreateNew = ({ addAnecdote }) => {
           />
         </div>
         <button>create</button>
-        <button onClick={handleReset}>reset</button>
+        <button type="button" onClick={handleReset}>reset</button>
       </form>
     </div>
   )
