@@ -34,21 +34,21 @@ const CreateNew = ({ addAnecdote }) => {
         <div>
           content
           <input
-            {...content}
+            {...content.attrs}
             name="content"
           />
         </div>
         <div>
           author
           <input
-            {...author}
+            {...author.attrs}
             name="author"
           />
         </div>
         <div>
           url for more info
           <input
-            {...info}
+            {...info.attrs}
             name="info"
           />
         </div>
